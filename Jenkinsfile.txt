@@ -1,13 +1,35 @@
 pipeline {
     agent any
     stages {
+        stage('Restore') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'dotnet restore HouseRentingSystem.sln'
+                    } else if (isWindows()) {
+                        bat 'dotnet restore HouseRentingSystem.sln'
+                    }
+                }
+            }
+        }
         stage('Build') {
             steps {
                 script {
                     if (isUnix()) {
-                        // Unix-specific steps
+                        sh 'dotnet build HouseRentingSystem.sln --configuration Release'
                     } else if (isWindows()) {
-                        // Windows-specific steps
+                        bat 'dotnet build HouseRentingSystem.sln --configuration Release'
+                    }
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'dotnet test HouseRentingSystem.Tests/HouseRentingSystem.Tests.csproj'
+                    } else if (isWindows()) {
+                        bat 'dotnet test HouseRentingSystem.Tests/HouseRentingSystem.Tests.csproj'
                     }
                 }
             }
