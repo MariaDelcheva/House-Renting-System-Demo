@@ -3,35 +3,17 @@ pipeline {
     stages {
         stage('Restore') {
             steps {
-                script {
-                    if (isUnix()) {
-                        sh 'dotnet restore HouseRentingSystem.sln'
-                    } else if (isWindows()) {
-                        bat 'dotnet restore HouseRentingSystem.sln'
-                    }
-                }
+                sh 'dotnet restore HouseRentingSystem.sln'
             }
         }
         stage('Build') {
             steps {
-                script {
-                    if (isUnix()) {
-                        sh 'dotnet build HouseRentingSystem.sln --configuration Release'
-                    } else if (isWindows()) {
-                        bat 'dotnet build HouseRentingSystem.sln --configuration Release'
-                    }
-                }
+                sh 'dotnet build HouseRentingSystem.sln --configuration Release'
             }
         }
         stage('Test') {
             steps {
-                script {
-                    if (isUnix()) {
-                        sh 'dotnet test HouseRentingSystem.Tests/HouseRentingSystem.Tests.csproj'
-                    } else if (isWindows()) {
-                        bat 'dotnet test HouseRentingSystem.Tests/HouseRentingSystem.Tests.csproj'
-                    }
-                }
+                sh 'dotnet test HouseRentingSystem.Tests/HouseRentingSystem.Tests.csproj'
             }
         }
     }
