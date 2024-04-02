@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                bat 'dotnet restore HouseRentingSystem.sln --configuration Release'
+                bat 'dotnet build HouseRentingSystem.sln --configuration Release'
             }
         }
         stage('Test') {
